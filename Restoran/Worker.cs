@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restoran.In;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,8 +17,11 @@ public class Worker
     public string WDocument { get; set; } = null!;
 
     public string WIpn { get; set; } = null!;
+    public int? WPostId { get; set; } = null;
 
     public decimal WSalary { get; set; }
-    public virtual ICollection<Ordering> Orderings { get; } = new List<Ordering>();
+    public  List<Ordering> Orderings { get; } = new List<Ordering>();
+    public virtual WorkRank? WPost { get; set; }
+
 
 }

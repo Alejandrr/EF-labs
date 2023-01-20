@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
 
 namespace Restoran.In;
 
@@ -37,12 +35,18 @@ public partial class RestoranDbContext : DbContext
 
     public virtual DbSet<Worker> Workers { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-PMFJBLL\\MSSQL;Database=RestoranDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CId).HasName("PK_Customer");
+            entity.HasKey(e => e.CId).HasName("PK__Customer__A9FDEC1247B7314C");
+
             entity.ToTable("Customer");
+
             entity.Property(e => e.CId).HasColumnName("C_ID");
             entity.Property(e => e.CPib)
                 .HasMaxLength(40)
@@ -52,7 +56,7 @@ public partial class RestoranDbContext : DbContext
 
         modelBuilder.Entity<Dish>(entity =>
         {
-            entity.HasKey(e => e.DId).HasName("PK_Dish");
+            entity.HasKey(e => e.DId).HasName("PK__Dish__76B8FF7D8BE29908");
 
             entity.ToTable("Dish");
 
@@ -77,7 +81,7 @@ public partial class RestoranDbContext : DbContext
 
         modelBuilder.Entity<DishNumerate>(entity =>
         {
-            entity.HasKey(e => e.DnId).HasName("PK_DishNumerate");
+            entity.HasKey(e => e.DnId).HasName("PK__DishNume__49FB061ECB36A34F");
 
             entity.ToTable("DishNumerate");
 
@@ -88,14 +92,14 @@ public partial class RestoranDbContext : DbContext
                 .HasColumnType("money")
                 .HasColumnName("DN_Price");
             entity.Property(e => e.DnTimestamp)
-                .HasDefaultValueSql("('2022-06-07 07:07:07')")
+                .HasDefaultValueSql("('2022-06-07 07:07:00')")
                 .HasColumnType("datetime")
                 .HasColumnName("DN_Timestamp");
         });
 
         modelBuilder.Entity<Ingridient>(entity =>
         {
-            entity.HasKey(e => e.IId).HasName("PK_Ingridient");
+            entity.HasKey(e => e.IId).HasName("PK__Ingridie__BB7DAFC438C0BCE3");
 
             entity.ToTable("Ingridient");
 
@@ -117,7 +121,7 @@ public partial class RestoranDbContext : DbContext
 
         modelBuilder.Entity<Ordering>(entity =>
         {
-            entity.HasKey(e => e.OId).HasName("PK_Ordering");
+            entity.HasKey(e => e.OId).HasName("PK__Ordering__5AAB0C1844B644DD");
 
             entity.ToTable("Ordering");
 
@@ -134,28 +138,28 @@ public partial class RestoranDbContext : DbContext
 
             entity.HasOne(d => d.OC).WithMany(p => p.Orderings)
                 .HasForeignKey(d => d.OCId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Ordering_O_C_ID");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Ordering__O_C_ID__5FB337D6");
 
             entity.HasOne(d => d.ODn).WithMany(p => p.Orderings)
                 .HasForeignKey(d => d.ODnId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Ordering_O_DN");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Ordering__O_DN_I__628FA481");
 
             entity.HasOne(d => d.OP).WithMany(p => p.Orderings)
                 .HasForeignKey(d => d.OPId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Ordering");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Ordering__O_P_ID__619B8048");
 
             entity.HasOne(d => d.OW).WithMany(p => p.Orderings)
                 .HasForeignKey(d => d.OWId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Ordering");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Ordering__O_W_ID__60A75C0F");
         });
 
         modelBuilder.Entity<Position>(entity =>
         {
-            entity.HasKey(e => e.PId).HasName("PK_Position");
+            entity.HasKey(e => e.PId).HasName("PK__Position__A3420A7759256F4A");
 
             entity.ToTable("Position");
 
@@ -173,7 +177,7 @@ public partial class RestoranDbContext : DbContext
 
         modelBuilder.Entity<Recept>(entity =>
         {
-            entity.HasKey(e => e.RId).HasName("PK_Recept");
+            entity.HasKey(e => e.RId).HasName("PK__Recept__DE152E897D975153");
 
             entity.ToTable("Recept");
 
@@ -184,22 +188,22 @@ public partial class RestoranDbContext : DbContext
 
             entity.HasOne(d => d.RD).WithMany(p => p.Recepts)
                 .HasForeignKey(d => d.RDId)
-                .HasConstraintName("FK_Recept_R_D_ID");
+                .HasConstraintName("FK__Recept__R_D_ID__46E78A0C");
 
             entity.HasOne(d => d.RI).WithMany(p => p.Recepts)
                 .HasForeignKey(d => d.RIId)
-                .HasConstraintName("FK_Recept_R_I_ID");
+                .HasConstraintName("FK__Recept__R_I_ID__47DBAE45");
         });
 
         modelBuilder.Entity<Restoran>(entity =>
         {
-            entity.HasKey(e => e.RId).HasName("PK_Restoran");
+            entity.HasKey(e => e.RId).HasName("PK__Restoran__DE152E894DFD147D");
 
             entity.ToTable("Restoran");
 
-            entity.HasIndex(e => e.RName, "UQ_Restoran_Name").IsUnique();
+            entity.HasIndex(e => e.RName, "UQ__Restoran__89ED989005D56FB5").IsUnique();
 
-            entity.HasIndex(e => e.RAddress, "UQ_Restoran_Address").IsUnique();
+            entity.HasIndex(e => e.RAddress, "UQ__Restoran__AD99D60231E7BD84").IsUnique();
 
             entity.Property(e => e.RId).HasColumnName("R_ID");
             entity.Property(e => e.RAddress)
@@ -219,7 +223,7 @@ public partial class RestoranDbContext : DbContext
 
         modelBuilder.Entity<WorkRank>(entity =>
         {
-            entity.HasKey(e => e.WrId).HasName("PK_WorkRank");
+            entity.HasKey(e => e.WrId).HasName("PK__WorkRank__072171EC6A06304C");
 
             entity.ToTable("WorkRank");
 
@@ -232,15 +236,15 @@ public partial class RestoranDbContext : DbContext
 
         modelBuilder.Entity<Worker>(entity =>
         {
-            entity.HasKey(e => e.WId).HasName("PK_Worker");
+            entity.HasKey(e => e.WId).HasName("PK__Worker__8175B573B8E52C81");
 
             entity.ToTable("Worker");
 
-            entity.HasIndex(e => e.WIpn, "UQ_Worker_IPN").IsUnique();
+            entity.HasIndex(e => e.WIpn, "UQ__Worker__7DC98B492C0588AA").IsUnique();
 
-            entity.HasIndex(e => e.WPib, "UQ_Worker_PIB").IsUnique();
+            entity.HasIndex(e => e.WPib, "UQ__Worker__7F707436AB021570").IsUnique();
 
-            entity.HasIndex(e => e.WDocument, "UQ_Worker_Doc").IsUnique();
+            entity.HasIndex(e => e.WDocument, "UQ__Worker__F3610C96BFB8B642").IsUnique();
 
             entity.Property(e => e.WId).HasColumnName("W_ID");
             entity.Property(e => e.WDocument)
@@ -262,26 +266,11 @@ public partial class RestoranDbContext : DbContext
 
             entity.HasOne(d => d.WPost).WithMany(p => p.Workers)
                 .HasForeignKey(d => d.WPostId)
-                .HasConstraintName("FK_Worker_PostID");
+                .HasConstraintName("FK__Worker__W_PostID__5165187F");
         });
 
-    
+        OnModelCreatingPartial(modelBuilder);
     }
 
-    public class SampleContextFactory : IDesignTimeDbContextFactory<RestoranDbContext>
-    {
-        public RestoranDbContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<RestoranDbContext>();
-
-            ConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
-            IConfigurationRoot config = builder.Build();
-
-            string connectionString = config.GetConnectionString("DefaultConnection")!;
-            optionsBuilder.UseSqlServer(connectionString);
-            return new RestoranDbContext(optionsBuilder.Options);
-        }
-    }
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
