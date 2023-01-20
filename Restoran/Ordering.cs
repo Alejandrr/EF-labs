@@ -21,8 +21,9 @@ public partial class Ordering
 
     public byte OPosition { get; set; }
     public  Customer? OC { get; set; } = null!;
-    public  Position? OP { get; set; } = null!;
+    public  Position? OP { get; set; } = null;
+
+    public DishNumerate? ODn { get; set; } = null!;
     
-    
-    public  Worker? OW { get; set; } = null!;
+    public Worker? OW { get; set; } = null!;
 }

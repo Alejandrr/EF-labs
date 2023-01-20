@@ -32,11 +32,13 @@ namespace Restoran.Migrations
 
                     b.Property<string>("CPib")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("C_PIB");
 
                     b.HasKey("CId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("Restoran.Dish", b =>
@@ -51,17 +53,23 @@ namespace Restoran.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("DCalority")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("((1))");
 
                     b.Property<string>("DName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<decimal?>("DPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValueSql("((1))");
 
                     b.Property<string>("DType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<short?>("IngridientIId")
                         .HasColumnType("smallint");
@@ -70,7 +78,7 @@ namespace Restoran.Migrations
 
                     b.HasIndex("IngridientIId");
 
-                    b.ToTable("Dishes");
+                    b.ToTable("Dishes", (string)null);
                 });
 
             modelBuilder.Entity("Restoran.DishNumerate", b =>
@@ -88,16 +96,20 @@ namespace Restoran.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("DnPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValueSql("((10.2))");
 
                     b.Property<DateTime?>("DnTimestamp")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("('2022-06-07 07:07:00')");
 
                     b.HasKey("DnId");
 
                     b.HasIndex("DishDId");
 
-                    b.ToTable("DishNumerates");
+                    b.ToTable("DishNumerates", (string)null);
                 });
 
             modelBuilder.Entity("Restoran.Ingridient", b =>
@@ -112,17 +124,22 @@ namespace Restoran.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("IName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<decimal?>("IPriceFromZavod")
-                        .HasColumnType("decimal(18,2)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValueSql("((1))");
 
                     b.Property<decimal?>("IWeight")
-                        .HasColumnType("decimal(18,2)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18, 0)")
+                        .HasDefaultValueSql("((1))");
 
                     b.HasKey("IId");
 
-                    b.ToTable("Ingridients");
+                    b.ToTable("Ingridients", (string)null);
                 });
 
             modelBuilder.Entity("Restoran.Ordering", b =>
@@ -132,9 +149,6 @@ namespace Restoran.Migrations
                         .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("OId"));
-
-                    b.Property<short?>("DishNumerateDnId")
-                        .HasColumnType("smallint");
 
                     b.Property<short>("OCId")
                         .HasColumnType("smallint");
@@ -149,22 +163,25 @@ namespace Restoran.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("OTimestamp")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("('2022 June 07 08:7:0')");
 
                     b.Property<short>("OWId")
                         .HasColumnType("smallint");
 
                     b.HasKey("OId");
 
-                    b.HasIndex("DishNumerateDnId");
-
                     b.HasIndex("OCId");
 
-                    b.HasIndex("OPId");
+                    b.HasIndex("ODnId");
+
+                    b.HasIndex("OPId")
+                        .IsUnique();
 
                     b.HasIndex("OWId");
 
-                    b.ToTable("Orderings");
+                    b.ToTable("Orderings", (string)null);
                 });
 
             modelBuilder.Entity("Restoran.Position", b =>
@@ -179,75 +196,117 @@ namespace Restoran.Migrations
                         .HasColumnType("smallint");
 
                     b.Property<string>("PRoomType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("PRoomType");
 
                     b.Property<string>("PType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("PType");
 
                     b.HasKey("PId");
 
-                    b.ToTable("Positions");
+                    b.ToTable("Positions", null, t =>
+                        {
+                            t.HasCheckConstraint("PRoomType", "PRoomType IN('For love','Bathroom','Bar','Terrasa')");
+
+                            t.HasCheckConstraint("PType", "P_Type IN('Small', 'Medium', 'Large')");
+                        });
                 });
 
             modelBuilder.Entity("Restoran.Restoraunt", b =>
                 {
                     b.Property<short>("RId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("RId");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("RId"));
 
                     b.Property<string>("RAddress")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("RAddress");
 
                     b.Property<int?>("RClients")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("RClients")
+                        .HasDefaultValueSql("((0))");
 
                     b.Property<string>("RName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("RName");
 
                     b.Property<short>("RTables")
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("RTables");
 
                     b.Property<int>("RWorkers")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("RWorkers");
 
                     b.HasKey("RId");
 
-                    b.ToTable("Restorans");
+                    b.HasIndex(new[] { "RAddress" }, "Restorans_RAddress")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "RName" }, "Restorans_RName")
+                        .IsUnique();
+
+                    b.ToTable("Restorans", (string)null);
                 });
 
             modelBuilder.Entity("Restoran.Worker", b =>
                 {
-                    b.Property<short>("CId")
+                    b.Property<short>("WId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                        .HasColumnType("smallint")
+                        .HasColumnName("WId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("CId"));
-
-                    b.Property<string>("CPib")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("WId"));
 
                     b.Property<string>("WDocument")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)")
+                        .HasColumnName("WDocument");
 
                     b.Property<string>("WIpn")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)")
+                        .HasColumnName("WIpn");
+
+                    b.Property<string>("WPib")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("WPib");
 
                     b.Property<string>("WRank")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("WSalary")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money")
+                        .HasColumnName("WSalary");
 
-                    b.HasKey("CId");
+                    b.HasKey("WId");
 
-                    b.ToTable("Workers");
+                    b.HasIndex(new[] { "WDocument" }, "Workers_WDocument")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "WIpn" }, "Workers_WIpn")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "WPib" }, "Workers_WPib")
+                        .IsUnique();
+
+                    b.ToTable("Workers", (string)null);
                 });
 
             modelBuilder.Entity("Restoran.Dish", b =>
@@ -266,29 +325,30 @@ namespace Restoran.Migrations
 
             modelBuilder.Entity("Restoran.Ordering", b =>
                 {
-                    b.HasOne("Restoran.DishNumerate", null)
-                        .WithMany("Orderings")
-                        .HasForeignKey("DishNumerateDnId");
-
                     b.HasOne("Restoran.Customer", "OC")
                         .WithMany("Orderings")
                         .HasForeignKey("OCId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Restoran.DishNumerate", "ODn")
+                        .WithMany("Orderings")
+                        .HasForeignKey("ODnId")
                         .IsRequired();
 
                     b.HasOne("Restoran.Position", "OP")
-                        .WithMany("Orderings")
-                        .HasForeignKey("OPId")
+                        .WithOne("POrder")
+                        .HasForeignKey("Restoran.Ordering", "OPId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Restoran.Worker", "OW")
                         .WithMany("Orderings")
                         .HasForeignKey("OWId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("OC");
+
+                    b.Navigation("ODn");
 
                     b.Navigation("OP");
 
@@ -317,7 +377,7 @@ namespace Restoran.Migrations
 
             modelBuilder.Entity("Restoran.Position", b =>
                 {
-                    b.Navigation("Orderings");
+                    b.Navigation("POrder");
                 });
 
             modelBuilder.Entity("Restoran.Worker", b =>

@@ -23,22 +23,35 @@ var options = optionsBuilder.UseSqlServer(connectionString).Options;
 using (RestoranDbContext db = new RestoranDbContext(options))
 {
  //   db.Database.EnsureDeleted();
-    db.Database.Migrate();
+   // db.Database.Migrate();
 }
-
-using(RestoranDbContext db = new RestoranDbContext(options))
+// TPH
+using (RestoranDbContext db = new RestoranDbContext(options))
 {
-    // Restoran.Restoran restoran = new Restoran.Restoran { RAddress = "mayakovskogo", RClients = 2, RName = "Krusovice", RTables = 2, RWorkers = 3 }; ;
-    Restoran.Restoraunt[] restorans = {
-     new Restoran.Restoraunt { RAddress = "mayakovskogo", RClients = 2, RName = "Krusovice", RTables = 2, RWorkers = 3 },
-     new Restoran.Restoraunt { RAddress = "ostrovskogo", RClients = 3, RName = "Gallia", RTables = 4, RWorkers = 4 },
-     new Restoran.Restoraunt { RAddress = "pigovskogo", RClients = 4, RName = "Tartala", RTables = 6, RWorkers = 5 },
-     new Restoran.Restoraunt { RAddress = "rodovskogo", RClients = 5, RName = "Pivobar", RTables = 1, RWorkers = 2 }
-    };
-    foreach(var  val in restorans)
-    {
-        db.Restorans.Add(val);
-    }
-   
+    Customer customer = new Customer { CPib = "Vova" };
+    GoodCustomer goodCustomer = new GoodCustomer { CPib = "Alisa", AverageOrderPrice = 900 };
+    BadCustomer badCustomer = new BadCustomer { CPib = "Bogdan", ReasonForDeleting = "Drink vodka with pivo" };
+    db.Customers.Add(customer);
+    db.Customers.Add(badCustomer);
+    db.Customers.Add(goodCustomer);
     db.SaveChanges();
 }
+
+
+
+//using (RestoranDbContext db = new RestoranDbContext(options))
+//{
+//    // Restoran.Restoran restoran = new Restoran.Restoran { RAddress = "mayakovskogo", RClients = 2, RName = "Krusovice", RTables = 2, RWorkers = 3 }; ;
+//    Restoran.Restoraunt[] restorans = {
+//     new Restoran.Restoraunt { RAddress = "mayakovskogo", RClients = 2, RName = "Krusovice", RTables = 2, RWorkers = 3 },
+//     new Restoran.Restoraunt { RAddress = "ostrovskogo", RClients = 3, RName = "Gallia", RTables = 4, RWorkers = 4 },
+//     new Restoran.Restoraunt { RAddress = "pigovskogo", RClients = 4, RName = "Tartala", RTables = 6, RWorkers = 5 },
+//     new Restoran.Restoraunt { RAddress = "rodovskogo", RClients = 5, RName = "Pivobar", RTables = 1, RWorkers = 2 }
+//    };
+//    foreach(var  val in restorans)
+//    {
+//        db.Restorans.Add(val);
+//    }
+
+//    db.SaveChanges();
+//}

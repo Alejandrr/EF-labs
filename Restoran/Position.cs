@@ -15,5 +15,5 @@ public partial class Position
 
     public string? PRoomType { get; set; }
 
-    public virtual ICollection<Ordering> Orderings { get; } = new List<Ordering>();
+    public Ordering? POrder { get; set; }=null;
 }
