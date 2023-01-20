@@ -18,7 +18,6 @@ public class Worker
     public string WIpn { get; set; } = null!;
 
     public decimal WSalary { get; set; }
-    public string? WRank { get; set; }
     public virtual ICollection<Ordering> Orderings { get; } = new List<Ordering>();
 
 }

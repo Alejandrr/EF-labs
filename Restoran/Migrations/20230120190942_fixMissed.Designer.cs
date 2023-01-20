@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restoran;
 
@@ -11,9 +12,11 @@ using Restoran;
 namespace Restoran.Migrations
 {
     [DbContext(typeof(RestoranDbContext))]
-    partial class RestoranDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230120190942_fixMissed")]
+    partial class fixMissed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,10 +74,12 @@ namespace Restoran.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<short?>("IngridientIId")
+                        .HasColumnType("smallint");
 
                     b.HasKey("DId");
 
-                   
+                    b.HasIndex("IngridientIId");
 
                     b.ToTable("Dishes");
                 });
@@ -302,6 +307,13 @@ namespace Restoran.Migrations
                         .IsUnique();
 
                     b.ToTable("Workers");
+                });
+
+            modelBuilder.Entity("Restoran.Dish", b =>
+                {
+                    b.HasOne("Restoran.Ingridient", null)
+                        .WithMany("IDishes")
+                        .HasForeignKey("IngridientIId");
                 });
 
             modelBuilder.Entity("Restoran.DishNumerate", b =>

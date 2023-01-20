@@ -19,6 +19,6 @@ public partial class Dish
 
     public decimal? DPrice { get; set; }
 
-    public virtual ICollection<DishNumerate> Orderings { get; } = new List<DishNumerate>();
+    public  List<DishNumerate> Orderings { get; } = new List<DishNumerate>();
 
 }

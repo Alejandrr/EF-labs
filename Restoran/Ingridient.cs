@@ -17,5 +17,5 @@ public partial class Ingridient
 
     public decimal? IPriceFromZavod { get; set; }
 
-    public virtual ICollection<Dish> Recepts { get; } = new List<Dish>();
+    public  List<Dish> IDishes { get; } = new List<Dish>();
 }

@@ -12,8 +12,8 @@ using Restoran;
 namespace Restoran.Migrations
 {
     [DbContext(typeof(RestoranDbContext))]
-    [Migration("20230120160130_RebasedScheme")]
-    partial class RebasedScheme
+    [Migration("20230120174541_Rebased")]
+    partial class Rebased
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -124,7 +124,7 @@ public partial class RestoranDbContext : DbContext
             entity.HasOne(e => e.POrder).WithOne(p => p.OP);
 
             entity.Property(e => e.PType).HasColumnName("PType");
-            entity.ToTable(t => t.HasCheckConstraint("PType", "P_Type IN('Small', 'Medium', 'Large')"));
+            entity.ToTable(t => t.HasCheckConstraint("PType", "PType IN('Small', 'Medium', 'Large')"));
             entity.Property(e => e.PRoomType)
                 .HasMaxLength(10)
                 .HasColumnName("PRoomType");
