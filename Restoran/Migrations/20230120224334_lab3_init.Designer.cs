@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restoran3;
 
@@ -11,9 +12,11 @@ using Restoran3;
 namespace Restoran.Migrations
 {
     [DbContext(typeof(RestoranDbContext))]
-    partial class RestoranDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230120224334_lab3_init")]
+    partial class lab3init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

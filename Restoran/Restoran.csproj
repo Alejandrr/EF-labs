@@ -9,8 +9,15 @@
 
   <ItemGroup>
     <Compile Remove="In\**" />
+    <Compile Remove="Migrations\**" />
     <EmbeddedResource Remove="In\**" />
+    <EmbeddedResource Remove="Migrations\**" />
     <None Remove="In\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="RestoranDbContext.cs~RF3d9fb7f.TMP" />
   </ItemGroup>
 
   <ItemGroup>

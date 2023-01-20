@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Restoran;
+namespace Restoran3;
 
 public partial class Restoraunt
 {

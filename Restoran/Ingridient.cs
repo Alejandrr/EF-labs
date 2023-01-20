@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Restoran.In;
+namespace Restoran3;
 
 public partial class Ingridient
 {

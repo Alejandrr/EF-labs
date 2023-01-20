@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Restoran.In;
+namespace Restoran3;
 
 public partial class RestoranDbContext : DbContext
 {
@@ -135,22 +135,22 @@ public partial class RestoranDbContext : DbContext
             entity.HasOne(d => d.OC).WithMany(p => p.Orderings)
                 .HasForeignKey(d => d.OCId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Ordering_O_C_ID");
+                .HasConstraintName("FK_Ordering_C_ID");
 
             entity.HasOne(d => d.ODn).WithMany(p => p.Orderings)
                 .HasForeignKey(d => d.ODnId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Ordering_O_DN");
+                .HasConstraintName("FK_Ordering_DN");
 
             entity.HasOne(d => d.OP).WithMany(p => p.Orderings)
                 .HasForeignKey(d => d.OPId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Ordering");
+                .HasConstraintName("FK_Ordering_P_ID");
 
             entity.HasOne(d => d.OW).WithMany(p => p.Orderings)
                 .HasForeignKey(d => d.OWId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_Ordering");
+                .HasConstraintName("FK_Ordering_W_ID");
         });
 
         modelBuilder.Entity<Position>(entity =>

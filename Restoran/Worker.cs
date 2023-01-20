@@ -1,12 +1,12 @@
-﻿using Restoran.In;
+﻿using Restoran3;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Restoran;
+namespace Restoran3;
 
-[Table("Workers")]
+[Table("Worker")]
 public class Worker 
 {
     [Key]
@@ -17,7 +17,7 @@ public class Worker
     public string WDocument { get; set; } = null!;
 
     public string WIpn { get; set; } = null!;
-    public int? WPostId { get; set; } = null;
+    public short? WPostId { get; set; } = null;
 
     public decimal WSalary { get; set; }
     public  List<Ordering> Orderings { get; } = new List<Ordering>();
