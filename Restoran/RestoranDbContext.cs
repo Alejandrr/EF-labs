@@ -29,11 +29,7 @@ public partial class RestoranDbContext : DbContext
 
     public virtual DbSet<Position> Positions { get; set; }
 
-    public virtual DbSet<Recept> Recepts { get; set; }
-
     public virtual DbSet<Restoraunt> Restorans { get; set; }
-
-    public virtual DbSet<WorkRank> WorkRanks { get; set; }
 
     public virtual DbSet<Worker> Workers { get; set; }
 
@@ -126,7 +122,7 @@ public partial class RestoranDbContext : DbContext
 
             entity.Property(e => e.PRoomType)
                 .HasMaxLength(10);
-           
+
             entity.Property(e => e.PType)
                 .HasMaxLength(30);
         });
@@ -137,7 +133,7 @@ public partial class RestoranDbContext : DbContext
 
             entity.HasOne(d => d.RD).WithMany(p => p.Recepts)
                 .HasForeignKey(d => d.RDId);
-             
+
 
             entity.HasOne(d => d.RI).WithMany(p => p.Recepts)
                 .HasForeignKey(d => d.RIId);
@@ -161,18 +157,12 @@ public partial class RestoranDbContext : DbContext
                 .HasMaxLength(30);
         });
 
-        modelBuilder.Entity<WorkRank>(entity =>
-        {
-            entity.HasKey(e => e.WrId);
 
-            entity.Property(e => e.WrFullName)
-                .HasMaxLength(30);
-        });
 
         modelBuilder.Entity<Worker>(entity =>
         {
             entity.HasKey(e => e.WId);
-           
+
             entity.HasIndex(e => e.WIpn).IsUnique();
 
             entity.HasIndex(e => e.WPib).IsUnique();
@@ -187,7 +177,7 @@ public partial class RestoranDbContext : DbContext
 
             entity.Property(e => e.WPib)
                 .HasMaxLength(40);
-                  
+
             entity.Property(e => e.WSalary)
                 .HasColumnType("money");
 

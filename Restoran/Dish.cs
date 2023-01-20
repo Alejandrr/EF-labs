@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Restoran;
 
 public partial class Dish
 {
+    [Key]
     public short DId { get; set; }
 
     public string DName { get; set; } = null!;
@@ -17,5 +19,6 @@ public partial class Dish
 
     public decimal? DPrice { get; set; }
 
-    public virtual ICollection<Recept> Recepts { get; } = new List<Recept>();
+    public virtual ICollection<DishNumerate> Orderings { get; } = new List<DishNumerate>();
+
 }

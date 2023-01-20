@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Restoran;
 
-public partial class Worker
+[Table("Workers")]
+public partial class Worker :People
 {
-    public short WId { get; set; }
-
-    public string WPib { get; set; } = null!;
-
+  
     public string WDocument { get; set; } = null!;
 
     public string WIpn { get; set; } = null!;
 
     public decimal WSalary { get; set; }
-
-    public short? WPostId { get; set; }
-
+    public string? WRank { get; set; }
     public virtual ICollection<Ordering> Orderings { get; } = new List<Ordering>();
 
-    public virtual WorkRank? WPost { get; set; }
 }

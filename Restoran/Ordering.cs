@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Restoran;
 
 public partial class Ordering
 {
+    [Key]
     public short OId { get; set; }
 
     public short OCId { get; set; }
@@ -18,12 +20,9 @@ public partial class Ordering
     public DateTime? OTimestamp { get; set; }
 
     public byte OPosition { get; set; }
-
-    public virtual Customer OC { get; set; } = null!;
-
-    public virtual DishNumerate ODn { get; set; } = null!;
-
-    public virtual Position OP { get; set; } = null!;
-
-    public virtual Worker OW { get; set; } = null!;
+    public  Customer? OC { get; set; } = null!;
+    public  Position? OP { get; set; } = null!;
+    
+    
+    public  Worker? OW { get; set; } = null!;
 }

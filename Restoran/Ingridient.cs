@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Restoran;
 
 public partial class Ingridient
 {
+    [Key]
     public short IId { get; set; }
 
     public string? IName { get; set; }
@@ -15,5 +17,5 @@ public partial class Ingridient
 
     public decimal? IPriceFromZavod { get; set; }
 
-    public virtual ICollection<Recept> Recepts { get; } = new List<Recept>();
+    public virtual ICollection<Dish> Recepts { get; } = new List<Dish>();
 }

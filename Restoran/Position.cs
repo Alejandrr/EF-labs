@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Restoran;
 
 public partial class Position
 {
+    [Key]
     public short PId { get; set; }
 
     public short PChairs { get; set; }
