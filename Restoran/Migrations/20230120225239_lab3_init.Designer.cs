@@ -12,7 +12,7 @@ using Restoran3;
 namespace Restoran.Migrations
 {
     [DbContext(typeof(RestoranDbContext))]
-    [Migration("20230120224334_lab3_init")]
+    [Migration("20230120225239_lab3_init")]
     partial class lab3init
     {
         /// <inheritdoc />
