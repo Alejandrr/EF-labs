@@ -22,8 +22,8 @@ using (RestoranDbContext db = new RestoranDbContext(options))
    // db.Database.Migrate();
 }
 object locker = new();
-int x = 1;
-Action action = async () =>
+int x = 800;
+Action writing = async () =>
 {
     Monitor.Enter(locker);
     try
@@ -56,8 +56,8 @@ Action reading = () =>
     }
 };
 
-Task task1 = new Task(action);
-Task task2 = new Task(action);
+Task task1 = new Task(writing);
+Task task2 = new Task(writing);
 Task task3 = new Task(reading);
 task1.Start();
 task2.Start();
@@ -68,7 +68,7 @@ task3.Wait();
 
 
 
-ThreadStart action1 = () =>
+ThreadStart action = () =>
 {
     Monitor.Enter(locker);
     try
@@ -103,30 +103,4 @@ ThreadStart reading1 = () =>
         }
     }
 };
-
-var thread1 = new Thread(action1);
-var thread2 = new Thread(action1);
-var thread3 = new Thread(action1);
-var thread4 = new Thread(action1);
-
-thread1.Start();
-thread2.Start();
-thread3.Start();
-thread4.Start();
-DateTime date = DateTime.Now;
-var actionThreadsAreDone = false;
-while (!actionThreadsAreDone)
-{
-    actionThreadsAreDone = thread1.ThreadState == ThreadState.Stopped &&
-    thread2.ThreadState == ThreadState.Stopped &&
-    thread3.ThreadState == ThreadState.Stopped &&
-    thread4.ThreadState == ThreadState.Stopped;
-};
-DateTime dateafter = DateTime.Now;
-Console.WriteLine(dateafter - date);
-
-thread3 = new Thread(reading1);
-thread4 = new Thread(reading1);
-thread3.Start();
-thread4.Start();
 
