@@ -79,7 +79,7 @@ ThreadStart action1 = () =>
             {
                 db.Customers.AddAsync(new Customer
                 {
-                    CPib = x.ToString() + "ent",
+                    CPib = x.ToString()+ "ent",
                 });
                 x++;
             }
@@ -99,7 +99,7 @@ ThreadStart reading1 = () =>
         using (RestoranDbContext db = new RestoranDbContext(options))
         {
             var customers = db.Customers.ToList();
-            customers.ForEach(x => Console.WriteLine(x.FullName));
+            customers.ForEach(x => Console.WriteLine(x.CPib));
         }
     }
 };
