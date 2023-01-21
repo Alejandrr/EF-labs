@@ -105,13 +105,9 @@ ThreadStart reading1 = () =>
 };
 
 var thread1 = new Thread(action1);
-thread1.Name = "1";
 var thread2 = new Thread(action1);
-thread2.Name = "2";
 var thread3 = new Thread(action1);
-thread3.Name = "3";
 var thread4 = new Thread(action1);
-thread4.Name = "4";
 
 thread1.Start();
 thread2.Start();
