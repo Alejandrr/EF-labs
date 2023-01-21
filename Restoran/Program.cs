@@ -22,7 +22,7 @@ using (RestoranDbContext db = new RestoranDbContext(options))
    // db.Database.Migrate();
 }
 object locker = new();
-int x = 800;
+int x = 1;
 Action writing = async () =>
 {
     Monitor.Enter(locker);
