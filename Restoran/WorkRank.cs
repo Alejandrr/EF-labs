@@ -9,5 +9,5 @@ public partial class WorkRank
 
     public string? WrFullName { get; set; }
 
-    public virtual ICollection<Worker> Workers { get; } = new List<Worker>();
+    public virtual List<Worker> Workers { get; } = new List<Worker>();
 }
