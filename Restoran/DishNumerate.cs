@@ -14,4 +14,6 @@ public partial class DishNumerate
     public int DnDishes { get; set; }
 
     public virtual ICollection<Ordering> Orderings { get; } = new List<Ordering>();
+    public virtual ICollection<Dish> Dishes { get; } = new List<Dish>();
+
 }

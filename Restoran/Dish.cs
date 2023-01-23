@@ -6,7 +6,7 @@ namespace Restoran3;
 public partial class Dish
 {
     public short DId { get; set; }
-
+    public short DDnid { get; set; }
     public string DName { get; set; } = null!;
 
     public string? DType { get; set; }
@@ -16,6 +16,7 @@ public partial class Dish
     public int? DCalority { get; set; }
 
     public decimal? DPrice { get; set; }
+    public virtual DishNumerate DDn { get; set; } = null!;
 
     public virtual ICollection<Recept> Recepts { get; } = new List<Recept>();
 }

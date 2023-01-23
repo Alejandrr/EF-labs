@@ -19,7 +19,7 @@ var options = optionsBuilder.UseSqlServer(connectionString).Options;
 using (RestoranDbContext db = new RestoranDbContext(options))
 {
  //   db.Database.EnsureDeleted();
-   // db.Database.Migrate();
+  // db.Database.Migrate();
 }
 //Select
 using (RestoranDbContext db = new RestoranDbContext(options))
@@ -288,5 +288,49 @@ using (RestoranDbContext db = new RestoranDbContext(options))
     var ranks = db.WorkRanks.FromSqlRaw("SELECT * FROM GetWorkRankes()").ToList();
     foreach (var val in ranks)
         Console.WriteLine($"{val.WrFullName}");
+
+}
+//Zahist
+using (RestoranDbContext db = new RestoranDbContext(options))
+{
+    Console.WriteLine("******************************************ZAHIST**********************************************");
+
+    Console.WriteLine("******************************************ALL LIST**********************************************");
+    var query1 = from d in db.Dishes
+                 join dn in db.DishNumerates on d.DDnid equals dn.DnId
+                 join ord in db.Orderings on dn.DnId equals ord.ODnId
+                 group d by d.DName into g
+                 orderby g.Count() descending
+                 select new
+                 {
+                     Name = g.First().DName,
+                     Price = (g.First().DPrice).ToString() + "$",
+                     Count = g.Count(),
+                     Received = (g.First().DPrice * g.Count()).ToString() + "$"
+                 };
+    foreach (var val in query1)
+    {
+        Console.WriteLine($"Name:{val.Name}\tPrice:{val.Price}\t Ordered count :{val.Count}\tReceived money:{val.Received}");
+    }
+    Console.WriteLine("******************************************TOP OF RECEIVED LIST**********************************************");
+
+    var query2 = (from d in db.Dishes
+                 join dn in db.DishNumerates on d.DDnid equals dn.DnId
+                 join ord in db.Orderings on dn.DnId equals ord.ODnId
+                 group d by d.DName into g
+                 orderby g.Count() * g.First().DPrice descending
+                 select new
+                 {
+                     Name = g.First().DName,
+                     Price = g.First().DPrice,
+                     Count = g.Count(),
+                     Received = (g.First().DPrice * g.Count()).ToString() + "$"
+                 }).Take(5);
+
+    foreach (var val in query2)
+    {
+        Console.WriteLine(($"Name:{val.Name}\tPrice:{val.Price.ToString()+"$"}\t Ordered count :{val.Count}\tReceived money:{val.Received}"));
+    }
+
 
 }

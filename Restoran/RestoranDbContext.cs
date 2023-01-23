@@ -73,6 +73,15 @@ public partial class RestoranDbContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("D_Type");
+            entity.Property(e => e.DDnid)
+           .HasColumnName("D_DN_ID");
+            entity.HasOne(d => d.DDn).WithMany(p => p.Dishes)
+             .HasForeignKey(d => d.DDnid)
+             .OnDelete(DeleteBehavior.Restrict)
+             .HasConstraintName("FK_Dish_Ddnid");
+           
+             
+            
         });
 
         modelBuilder.Entity<DishNumerate>(entity =>
@@ -91,6 +100,7 @@ public partial class RestoranDbContext : DbContext
                 .HasDefaultValueSql("('2022-06-07 07:07:07')")
                 .HasColumnType("datetime")
                 .HasColumnName("DN_Timestamp");
+
         });
 
         modelBuilder.Entity<Ingridient>(entity =>
