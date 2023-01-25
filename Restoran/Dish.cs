@@ -18,6 +18,7 @@ public partial class Dish
     public int? DCalority { get; set; }
 
     public decimal? DPrice { get; set; }
+    public virtual List<Ingridient> DIngridients { get;} = new List<Ingridient>();
 
     public  List<DishNumerate> Orderings { get; } = new List<DishNumerate>();
 

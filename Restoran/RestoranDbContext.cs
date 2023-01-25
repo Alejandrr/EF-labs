@@ -59,8 +59,11 @@ public partial class RestoranDbContext : DbContext
 
             entity.Property(e => e.DType)
                 .HasMaxLength(10);
-
+            entity.HasMany<Ingridient>(d => d.DIngridients)
+            .WithMany(i => i.IDishes);
+ 
         });
+      
 
         modelBuilder.Entity<DishNumerate>(entity =>
         {

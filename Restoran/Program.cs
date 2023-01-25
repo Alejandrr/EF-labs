@@ -12,8 +12,9 @@ var options = optionsBuilder.UseSqlServer(connectionString).Options;
 
 using (RestoranDbContext db = new RestoranDbContext(options))
 {
+    db.Database.EnsureCreated();
  //   db.Database.EnsureDeleted();
-    db.Database.Migrate();
+   // db.Database.Migrate();
 }
 // TPH
 //using (RestoranDbContext db = new RestoranDbContext(options))
